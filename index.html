@@ -1,9 +1,65 @@
+<!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>测试</title>
-	</head>
-	<body>
-		hello world
-	</body>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1" />
+	<title>自封装插件</title>
+	<script type="text/javascript" src="js/jquery-1.10.1.min.js"></script>
+	<script type="text/javascript" src="js/autoSplitNumber/jquery.autoSplitNumber.min.js"></script>
+	<script type="text/javascript" src="js/upLoadImage/jquery.upLoadImg.min.js"></script>
+	<script type="text/javascript" src="js/checkCard/jquery.checkCard.min.js"></script>
+	<link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+	<div class="wraper">
+		<div class="title">1.输入数字自动分位插件，基于jQuery</div>
+		<div class="content autoSplit">
+			<span>银行卡号：</span>
+			<input type="tel" id="no" value="" placeholder="请输入银行卡号，每4位自动分开">
+		</div>
+	</div>
+
+	<div class="wraper">
+		<div class="title">2.HTML5上传图片,base64，基于h5的fileReader、canvas和jQuery</div>
+		<div class="content upLoadImage">
+			<div>
+				<img id="cardImg" src="images/bank.png"/>
+				<input type="file" id="upLoadImg"/> 
+			</div>
+		</div>
+	</div>
+
+	<div class="wraper">
+		<div class="title">3.校验身份证号码，准确度90%，依据身份证号组成规则，基于jQuery</div>
+		<div class="content checkCard">
+			<span>身份证号码：</span>
+			<input type="text" id="cardNo" value="" placeholder="请输入身份证号码" onblur="checkCard('cardNo')">
+			<span class="res"></span>
+		</div>
+	</div>
+	
+</body>
+<script type="text/javascript">
+	$(document).ready(function(){
+		//绑定自动分位插件
+		$("#no").autoSplitNumber(4); 
+
+		//绑定上传图片插件
+		$("#upLoadImg").upLoadImg({
+	        "showImage": "cardImg",//显示图片的id
+	        "width": 375, //目标图片的宽度
+	        "url":"上传图片的接口",  //上传图片的接口
+	        "callBack": function(data) {} //上传成功的回调函数
+	    });
+	});
+
+	var checkCard=function(id){
+		var res=$.checkCard(id);
+		var span=$(".res").empty();
+		var str=res?"<span style='color:green'>真</span>":"<span style='color:red'>假</span>"
+		span.append(str)
+	}
+
+</script>
 </html>

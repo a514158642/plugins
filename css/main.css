@@ -1,0 +1,49 @@
+html,body{
+	margin: 0;
+	padding: 0;
+}
+.wraper{
+	width: 90%;
+	margin: 10px auto;
+	background: #FDFDCA;
+	padding: 20px;
+	border-radius: 10px;
+}
+.title{
+	font-size: 14px;
+    border-bottom: 1px solid #ccc;
+    padding: 10px;
+}
+.content{
+	padding: 10px 20px;
+}
+.autoSplit span, .checkCard span{
+	font-size: 14px;
+}
+
+.autoSplit input, .checkCard input{
+	height: 25px;
+    width: 300px;
+    border: 1px solid #F5F5F5;
+    padding-left: 5px;
+    border-radius: 10px;
+}
+
+.upLoadImage div{
+	position: relative;
+	display: inline-block;
+}
+
+.upLoadImage img{
+	width: 200px;
+}
+
+.upLoadImage input{
+	position: absolute;
+    border: 1px solid #ccc;
+    height: 100%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    opacity: 0;
+}
