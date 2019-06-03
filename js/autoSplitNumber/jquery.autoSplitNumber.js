@@ -14,6 +14,7 @@
 	function autoSplitNumber(num,el){
 		this.num=num;
 		this.el=el;
+		this.timer=undefined;
 	};
 	/**
 	 * 设置对象属性
@@ -64,42 +65,46 @@
 		 * 设置input值
 		 * @author benboerba 2019-03-01
 		 */
-		setValue:function(){
+		setValue:function(event){
 			var $this=this;
 			var $el=$this.el;
 			var num=$this.num||4;
 			var currValue=$el.val();
 			if(!currValue) return false;
-
-			var cursorIndex=$this.getCursortPosition();//获取当前光标位置
-			currValue=currValue.replace(/\s/g, "");
-			var tempValue="";
-			for(var i=0;i<currValue.length;i++){
-				if(i>0&&i%num==0){
-					tempValue=tempValue+" "+currValue.charAt(i);
-				}else{
-					tempValue=tempValue+currValue.charAt(i);
+			
+			clearTimeout($this.timer)
+			$this.timer=setTimeout(function(){
+				var cursorIndex=$this.getCursortPosition();//获取当前光标位置
+				currValue=currValue.replace(/\s/g, "");
+				var tempValue="";
+				for(var i=0;i<currValue.length;i++){
+					if(i>0&&i%num==0){
+						tempValue=tempValue+" "+currValue.charAt(i);
+					}else{
+						tempValue=tempValue+currValue.charAt(i);
+					}
 				}
-			}
-			var code = event.keyCode || event.which;
-			var newIndex=cursorIndex;
-			//这段代码如果看不懂  就努力的看
-			if(cursorIndex%(num+1)==0&&code!=37&&code!=39){
-				if(code==8){
-					newIndex=cursorIndex-1;
-				}else{
-					newIndex=cursorIndex+1;
-				}
-			};
-			$el.val(tempValue);
-	        $this.setCaretPosition(newIndex);//设置光标位置
+				var code = event.keyCode || event.which;
+				var newIndex=cursorIndex;
+				//这段代码如果看不懂  就努力的看
+				if(cursorIndex%(num+1)==0&&code!=37&&code!=39){
+					if(code==8){
+						newIndex=cursorIndex-1;
+					}else{
+						newIndex=cursorIndex+1;
+					}
+				};
+				$el.val(tempValue);
+		        $this.setCaretPosition(newIndex);//设置光标位置
+			}.bind($this),10)
 	    }
 	};
 	$.fn.autoSplitNumber=function(num){
 		var $el=this;
 		var as=new autoSplitNumber(num,$el);
+		var timer=undefined;
 		$el.keyup(function(){
-			as.setValue();
+			as.setValue(event)
 		});
 	};
 
